@@ -1,0 +1,23 @@
+---
+# AutoHotkey compiled files
+*.exe
+*.env
+
+# Windows thumbnail cache files
+Thumbs.db
+ehthumbs.db
+
+# Folder config file
+Desktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# Personal notes
+private/
+notes.txt
+
+# Backup files
+*.bak
+*~
+---
