@@ -4,13 +4,41 @@
 SendMode Input  ; 推奨: 高速で信頼性の高い入力モード
 SetWorkingDir %A_ScriptDir%  ; スクリプトのディレクトリを作業ディレクトリにする
 
+
 ;; ========================================
 ;; グローバル変数の初期化
 ;; ========================================
 global F14_Used := false  ; F14が組み合わせで使われたかのフラグ
 global F15_Used := false  ; F15が組み合わせで使われたかのフラグ
+global lastTick := 0
 
 return ; 自動実行セクションの終了
+
+;; ========================================
+;; マウスの戻る２回押しになっちゃう問題の解決
+;; ========================================
+
+
+; デバウンス間隔（ミリ秒）
+debounceMs := 1000
+
+XButton1::
+    now := A_TickCount
+    if (now - lastTick < debounceMs) {
+        return
+    }
+    lastTick := now
+    Send, {XButton1}
+return
+
+XButton2::
+    now := A_TickCount
+    if (now - lastTick < debounceMs) {
+        return
+    }
+    lastTick := now
+    Send, {XButton2}
+return
 
 ;; ========================================
 ;; 修飾キー取得関数

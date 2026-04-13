@@ -307,6 +307,11 @@ MG_IsTarget7() {
 	return ((MG_WClass="Qt6101QWindowIcon"))
 }
 
+MG_IsTarget8() {
+	global
+	return ((MG_WClass="mintty"))
+}
+
 MG_IsExDefault() {
 	return (MG_IsTarget4() || MG_IsTarget6() || MG_IsTarget7())
 }
@@ -384,7 +389,10 @@ MG_GetAction_RB_RR_:
 return
 
 MG_Gesture_RB_U_:
-	if (!MG_IsExDefault()) {
+	if (MG_IsTarget8()) {
+		;Shift+Insertを押す
+		Send, +{Insert}
+	} else if (!MG_IsExDefault()){
 		;ペースト
 		
 		
@@ -423,7 +431,9 @@ MG_Gesture_RB_U_:
 return
 
 MG_GetAction_RB_U_:
-	if (!MG_IsExDefault()) {
+	if (MG_IsTarget8()) {
+		MG_ActionStr := "Shift+Insertを押す"
+	} else if (!MG_IsExDefault()){
 		MG_ActionStr := "ペースト"
 	}
 return
@@ -481,7 +491,10 @@ MG_GetAction_RB_UUD_:
 return
 
 MG_Gesture_RB_D_:
-	if (!MG_IsExDefault()) {
+	if (MG_IsTarget8()) {
+		;Ctrl+Insertを押す
+		Send, ^{Insert}
+	} else if (!MG_IsExDefault()){
 		;コピー    
 			ctrl  := GetKeyState("Ctrl",  "P")
 		    alt   := GetKeyState("Alt",   "P")
@@ -507,7 +520,9 @@ MG_Gesture_RB_D_:
 return
 
 MG_GetAction_RB_D_:
-	if (!MG_IsExDefault()) {
+	if (MG_IsTarget8()) {
+		MG_ActionStr := "Ctrl+Insertを押す"
+	} else if (!MG_IsExDefault()){
 		MG_ActionStr := "コピー    "
 	}
 return
