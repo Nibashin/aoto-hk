@@ -17,6 +17,9 @@ $RECYCLE.BIN/
 private/
 notes.txt
 
+# Local agent worktrees
+.claude/
+
 # Backup files
 *.bak
 *~
