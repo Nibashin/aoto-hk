@@ -12,6 +12,9 @@ global F14_Used := false  ; F14が組み合わせで使われたかのフラグ
 global F15_Used := false  ; F15が組み合わせで使われたかのフラグ
 global lastTick := 0
 
+;; 修飾キー（Ctrl等）の押しっぱなし固着を自動解放する見張りタイマー
+SetTimer, ReleaseStuckModifiers, 250
+
 return ; 自動実行セクションの終了
 
 ;; ========================================
@@ -334,3 +337,24 @@ IME_SET(SetSts, WinTitle="A")    {
           ,  Int, 0x006   ;wParam  : IMC_SETOPENSTATUS
           ,  Int, SetSts) ;lParam  : 0 or 1
 }
+
+;; ========================================
+;; 修飾キー押しっぱなし対策
+;; 高速入力時に Send の「キー解放」イベントが取りこぼされ、
+;; Ctrl 等が固着する問題への対処。
+;; 「論理的には押下中だが物理的には押されていない」修飾キーを
+;; 定期的に検出して強制的に解放する。
+;; ※物理的に押されている間は解放しないので、通常の押下操作は妨げない。
+;; ========================================
+ReleaseStuckModifiers:
+    ; 対象は Ctrl と Shift のみ。
+    ; Win / Alt は押下中でも OS が内部的に KeyUp を発生させることがあり、
+    ; 物理状態の判定が当てにならず「押しっぱなしにできない」誤解放を招くため除外。
+    ; （このスクリプトは Win / Alt を修飾キーとして送出しないので固着の対象にもならない）
+    for index, modKey in ["LControl", "RControl", "LShift", "RShift"]
+    {
+        ; 論理状態=押下 かつ 物理状態=非押下 → 固着しているので解放
+        if (GetKeyState(modKey) && !GetKeyState(modKey, "P"))
+            Send, {Blind}{%modKey% Up}
+    }
+return
