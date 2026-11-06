@@ -401,7 +401,7 @@ Goto, MG_Config_End
 
 MG_IsDisable() {
 	global
-	return ((MG_WClass="TankWindowClass"))
+	return ((MG_WClass="TankWindowClass") || (MG_StrComp(MG_Title, "Chrome リモート デスクトップ", 2)))
 }
 
 MG_IsTarget1() {

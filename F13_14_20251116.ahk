@@ -1,9 +1,11 @@
-#Requires AutoHotkey v1.1
+﻿#Requires AutoHotkey v1.1
 #NoEnv  ; 推奨: 環境変数を無視してパフォーマンス向上
 #SingleInstance Force ; 多重起動を防ぐ
 SendMode Input  ; 推奨: 高速で信頼性の高い入力モード
 SetWorkingDir %A_ScriptDir%  ; スクリプトのディレクトリを作業ディレクトリにする
 
+; ★追加ポイント1: ウィンドウタイトルの「部分一致」を有効にする
+SetTitleMatchMode, 2
 
 ;; ========================================
 ;; グローバル変数の初期化
@@ -18,9 +20,9 @@ SetTimer, ReleaseStuckModifiers, 250
 return ; 自動実行セクションの終了
 
 ;; ========================================
-;; TankWindowClass のウィンドウでは以下のホットキーを無効化
+;; TankWindowClass と Chrome リモート デスクトップ のウィンドウでは以下のホットキーを無効化
 ;; ========================================
-#IfWinNotActive ahk_class TankWindowClass
+#If !WinActive("ahk_class TankWindowClass") && !WinActive("Chrome リモート デスクトップ")
 
 ;; ========================================
 ;; マウスの戻る２回押しになっちゃう問題の解決
@@ -64,7 +66,6 @@ GetModifiers() {
         mod .= "#"  ; Windowsキー
     return mod
 }
-
 
 ;; ========================================
 ;; F14(無変換キー)の設定
