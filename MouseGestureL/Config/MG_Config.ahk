@@ -745,13 +745,20 @@ return
 
 MG_Gesture_RB_LD_:
 	if (!MG_IsExDefault()) {
-		
+		;quickAI
+		EnvGet, qaProfile, USERPROFILE
+		qaTrigger := qaProfile . "\Projects\quickAI\trigger.ahk"
+		if FileExist(qaTrigger) {
+			Run, "%A_AhkPath%" "%qaTrigger%"
+		} else {
+			TrayTip, quickAI, quickAI が未導入です
+		}
 	}
 return
 
 MG_GetAction_RB_LD_:
 	if (!MG_IsExDefault()) {
-		
+		MG_ActionStr := "quickAI"
 	}
 return
 
@@ -788,13 +795,20 @@ return
 
 MG_Gesture_RB_UL_:
 	if (!MG_IsExDefault()) {
-		
+		;quickAI 範囲選択
+		EnvGet, qaProfile, USERPROFILE
+		qaTrigger := qaProfile . "\Projects\quickAI\trigger.ahk"
+		if FileExist(qaTrigger) {
+			Run, "%A_AhkPath%" "%qaTrigger%" --region
+		} else {
+			TrayTip, quickAI, quickAI が未導入です
+		}
 	}
 return
 
 MG_GetAction_RB_UL_:
 	if (!MG_IsExDefault()) {
-		
+		MG_ActionStr := "quickAI 範囲選択"
 	}
 return
 
